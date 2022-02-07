@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         
-        VStack{
+        VStack(spacing: 0){
             
             HStack{
             
@@ -27,10 +27,18 @@ struct ContentView: View {
                 
             }
             
-            .font(.system(size: 72))
-            .padding()
+            
             
             Divider()
+            
+            HStack {
+                Image(systemName: "checkmark.circle")
+                    .foregroundColor(.green)
+                Spacer()
+                Text("30")
+            }
+            
+            Spacer()
             
             Button(action: {
                 // NOTE: Output will not be shown unless this app is run in the "full" simulator
@@ -41,8 +49,8 @@ struct ContentView: View {
             .buttonStyle(.bordered)
 
         }
-       
-        
+        .padding(.horizontal)
+        .font(.system(size: 72))
     }
 }
 
