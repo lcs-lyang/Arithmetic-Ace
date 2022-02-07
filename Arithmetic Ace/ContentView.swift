@@ -8,6 +8,17 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    //MARK: Stored Properties
+    let multiplicand = Int.random(in: 1...12)
+    let multiplier = Int.random(in: 1...12)
+    @State var inputGiven = ""
+    
+    
+    var correctProduct: Int{
+        return multiplicand * multiplier
+    }
+    //MARK: Computed Property
     var body: some View {
         
         VStack(spacing: 0){
@@ -19,9 +30,9 @@ struct ContentView: View {
                 
                 Spacer()
                 
-                VStack{
-                    Text("5")
-                    Text("6")
+                VStack(alignment: .trailing){
+                    Text("\(multiplicand)")
+                    Text("\(multiplier)")
                 }
                 
                 
@@ -35,20 +46,34 @@ struct ContentView: View {
                 Image(systemName: "checkmark.circle")
                     .foregroundColor(.green)
                 Spacer()
-                Text("30")
+                TextField("Product", text:
+                     $inputGiven)
+                    .multilineTextAlignment(.trailing)
             }
+            
+            Button(action: {
+                    guard let productGiven = Int(inputGiven) else {
+                return
+                    }
+                //check answer
+                if productGiven == correctProduct {
+                    
+                }
+                
+            }, label: {
+                Text("Check Answer")
+                    .font(.largeTitle)
+            })
+           
+                .padding()
+                .buttonStyle(.bordered)
+            
             
             Spacer()
             
-            Button(action: {
-                // NOTE: Output will not be shown unless this app is run in the "full" simulator
-                print("Button was pressed")
-            }, label: {
-                Text("Check Answer")
-            })
-            .buttonStyle(.bordered)
 
         }
+        
         .padding(.horizontal)
         .font(.system(size: 72))
     }
