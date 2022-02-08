@@ -10,15 +10,26 @@ import SwiftUI
 struct ContentView: View {
     
     //MARK: Stored Properties
-    let multiplicand = Int.random(in: 1...12)
-    let multiplier = Int.random(in: 1...12)
+    @State var multiplicand = Int.random(in: 1...12)
+    @State var multiplier = Int.random(in: 1...12)
     @State var inputGiven = ""
     
+    //Has an answer been checked?
+    @State var answerChecked = false
+    
+    //Was the answer given actually correct?
+    @State var answerCorrect = false
+   
+    @State var currentCand = Int.random(in: 1...12)
+    @State var currentPlier = Int.random(in: 1...12)
+
+    //MARK: Computed Property
     
     var correctProduct: Int{
         return multiplicand * multiplier
     }
-    //MARK: Computed Property
+    
+    
     var body: some View {
         
         VStack(spacing: 0){
@@ -45,6 +56,8 @@ struct ContentView: View {
             HStack {
                 Image(systemName: "checkmark.circle")
                     .foregroundColor(.green)
+                //           CONDITION       true  false
+                    .opacity(answerCorrect ? 1.0 : 0.0)
                 Spacer()
                 TextField("Product", text:
                      $inputGiven)
@@ -52,12 +65,16 @@ struct ContentView: View {
             }
             
             Button(action: {
+                //Answer has been checked
+                answerChecked = true
                     guard let productGiven = Int(inputGiven) else {
                 return
                     }
                 //check answer
                 if productGiven == correctProduct {
-                    
+                  answerCorrect = true
+                } else{
+                    answerCorrect = false
                 }
                 
             }, label: {
@@ -65,6 +82,27 @@ struct ContentView: View {
                     .font(.largeTitle)
             })
            
+                .padding()
+                .buttonStyle(.bordered)
+            
+            
+            Button(action: {
+                multiplier = currentPlier
+                multiplicand = currentCand
+                while multiplier == currentPlier {
+                    currentPlier = Int.random(in: 1...12)
+                }
+                
+                while multiplicand == currentCand{
+                    currentCand = Int.random(in: 1...12)
+                }
+                 
+                answerCorrect = false
+            }, label: {
+                Text("New Question")
+                    .font(.largeTitle)
+            })
+                .opacity(answerCorrect ? 1.0 : 0.0)
                 .padding()
                 .buttonStyle(.bordered)
             
